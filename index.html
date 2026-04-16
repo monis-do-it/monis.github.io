@@ -29,13 +29,15 @@ body{
   z-index:500;
   font-family:'Playfair Display';
   font-size:28px;
+  letter-spacing:4px;
 }
 
 /* CURSOR */
 .cursor{
-  width:20px;height:20px;border:1px solid white;border-radius:50%;
+  width:18px;height:18px;border:1px solid white;border-radius:50%;
   position:fixed;pointer-events:none;transform:translate(-50%,-50%);
   z-index:300;
+  transition:transform 0.2s ease;
 }
 
 /* NAVBAR */
@@ -52,6 +54,7 @@ body{
   margin-left:30px;
   text-decoration:none;
   color:#ccc;
+  transition:0.3s;
 }
 
 .nav-contact a{
@@ -67,20 +70,23 @@ body{
 .hero{height:100vh;position:relative;overflow:hidden;}
 .hero img{width:100%;height:100%;object-fit:cover;transform:scale(1.25);}
 .hero::after{
-  content:"";position:absolute;inset:0;background:rgba(0,0,0,0.35);
+  content:"";position:absolute;inset:0;background:rgba(0,0,0,0.4);
 }
 
 .hero-content{position:absolute;bottom:12%;left:8%;}
-.hero h1{font-family:'Playfair Display';font-size:80px;}
+.hero h1{font-family:'Playfair Display';font-size:80px;letter-spacing:3px;}
+.hero p{margin-top:15px;color:#bbb;}
 
-.hero .cta{
+.cta{
   margin-top:20px;
   display:inline-block;
-  padding:10px 20px;
+  padding:12px 24px;
   border:1px solid white;
   color:white;
   text-decoration:none;
+  transition:0.3s;
 }
+.cta:hover{background:white;color:black;}
 
 /* SECTION */
 .section{padding:180px 8%;}
@@ -95,14 +101,19 @@ body{
 .service{
   border:1px solid #333;
   padding:25px;
+  transition:0.4s;
+}
+.service:hover{
+  border-color:white;
+  transform:translateY(-10px);
 }
 
 /* PROJECTS */
 .project{margin-bottom:160px;overflow:hidden;}
-.project a{display:block;}
 .project img{
   width:100%;height:550px;object-fit:cover;
-  transform:scale(1.2);transition:1s;
+  transform:scale(1.2);
+  transition:1s;
 }
 .project:hover img{transform:scale(1.05);}
 
@@ -134,14 +145,6 @@ body{
   color:#777;
 }
 
-.footer a{
-  margin-left:20px;
-  color:#777;
-  text-decoration:none;
-}
-
-.footer a:hover{color:white;}
-
 /* WHATSAPP */
 .whatsapp{
   position:fixed;bottom:25px;right:25px;
@@ -154,9 +157,13 @@ body{
 
 <body>
 
-<!-- SOUND -->
-<audio id="bgSound" loop>
+<!-- SOUND SYSTEM -->
+<audio id="ambient" loop preload="auto">
   <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8e3c1c5b2.mp3" type="audio/mp3">
+</audio>
+
+<audio id="clickSound" preload="auto">
+  <source src="https://assets.mixkit.co/active_storage/sfx/3005/3005-preview.mp3">
 </audio>
 
 <div class="loader">INDOSON</div>
@@ -192,61 +199,39 @@ body{
 <section class="section" id="services">
   <h2>Services</h2>
   <div class="services">
-    <div class="service">
-      <h3>PEB Structures</h3>
-      <p>Pre-engineered industrial buildings.</p>
-    </div>
-    <div class="service">
-      <h3>Steel Fabrication</h3>
-      <p>Custom high precision steel work.</p>
-    </div>
-    <div class="service">
-      <h3>Industrial Construction</h3>
-      <p>Complete turnkey solutions.</p>
-    </div>
+    <div class="service"><h3>PEB Structures</h3><p>Pre-engineered buildings</p></div>
+    <div class="service"><h3>Steel Fabrication</h3><p>High precision steel work</p></div>
+    <div class="service"><h3>Industrial Construction</h3><p>Turnkey solutions</p></div>
   </div>
 </section>
 
 <!-- PROJECTS -->
 <section class="section projects" id="projects">
-
   <div class="project hover-target">
     <a href="project1.html">
       <img src="https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&w=1200&q=80">
     </a>
   </div>
-
-  <div class="project hover-target">
-    <a href="project1.html">
-      <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80">
-    </a>
-  </div>
-
 </section>
 
 <!-- CONTACT -->
 <section class="section contact" id="contact">
   <h2>Request a Quote</h2>
-
-  <form action="https://formsubmit.co/your@email.com" method="POST">
-    <input type="text" name="name" placeholder="Your Name" required>
-    <input type="tel" name="phone" placeholder="Phone Number" required>
-    <textarea name="details" placeholder="Project Details"></textarea>
-    <button type="submit">Send Inquiry</button>
+  <form>
+    <input type="text" placeholder="Your Name">
+    <input type="tel" placeholder="Phone">
+    <textarea placeholder="Project Details"></textarea>
+    <button>Send Inquiry</button>
   </form>
 </section>
 
 <footer class="footer">
   <p>© Indoson Infratech</p>
-  <div>
-    <a href="#">WhatsApp</a>
-    <a href="#">Email</a>
-    <a href="#">Instagram</a>
-  </div>
 </footer>
 
-<a class="whatsapp" href="#">WhatsApp</a>
+<a class="whatsapp" href="https://wa.me/91XXXXXXXXXX">WhatsApp</a>
 
+<!-- SCRIPTS -->
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
@@ -254,20 +239,35 @@ body{
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-// SOUND
-const sound = document.getElementById("bgSound");
+// SOUND SYSTEM
+const ambient = document.getElementById("ambient");
+const clickSound = document.getElementById("clickSound");
+
+ambient.volume = 0;
+clickSound.volume = 0.3;
+
 let started = false;
 
-function startSound(){
+function startAudio(){
   if(!started){
-    sound.volume = 0;
-    sound.play();
-    gsap.to(sound,{volume:0.2,duration:2}); // smooth fade in
+    ambient.play().catch(()=>{});
+    gsap.to(ambient,{volume:0.15,duration:2});
     started = true;
   }
 }
-window.addEventListener("click", startSound);
-window.addEventListener("scroll", startSound);
+
+window.addEventListener("click", startAudio);
+window.addEventListener("scroll", startAudio);
+
+// CLICK SOUND
+document.querySelectorAll('a, button').forEach(el=>{
+  el.addEventListener('click', ()=>{
+    if(started){
+      clickSound.currentTime = 0;
+      clickSound.play();
+    }
+  });
+});
 
 // LOADER
 gsap.to(".loader",{opacity:0,delay:1,onComplete:()=>document.querySelector(".loader").style.display="none"});
@@ -288,7 +288,7 @@ document.querySelectorAll(".project img").forEach(img=>{
   });
 });
 
-// NAV
+// NAV SCROLL
 document.querySelectorAll('.nav-links a').forEach(link=>{
   link.addEventListener('click',e=>{
     e.preventDefault();
@@ -297,10 +297,10 @@ document.querySelectorAll('.nav-links a').forEach(link=>{
 });
 
 // CURSOR
-const c=document.querySelector('.cursor');
+const cursor=document.querySelector('.cursor');
 window.addEventListener('mousemove',e=>{
-  c.style.top=e.clientY+'px';
-  c.style.left=e.clientX+'px';
+  cursor.style.top=e.clientY+'px';
+  cursor.style.left=e.clientX+'px';
 });
 </script>
 
