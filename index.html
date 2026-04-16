@@ -8,18 +8,54 @@
     body {
       margin: 0;
       overflow: hidden;
-      background: black;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    /* TEXT OVERLAY */
+    .hero {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 10;
+    }
+
+    h1 {
+      font-size: 50px;
+      letter-spacing: 3px;
+      margin: 0;
+    }
+
+    p {
+      margin: 10px 0 20px;
+      font-size: 18px;
+      color: #ccc;
+    }
+
+    button {
+      padding: 12px 24px;
+      border: none;
+      background: white;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
     }
   </style>
 </head>
 
 <body>
 
-<script type="module">
+<div class="hero">
+  <h1>INDOSON INFRATECH</h1>
+  <p>Precision in Steel Structures</p>
+  <button>View Projects</button>
+</div>
 
-import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
-import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 
+<script>
 // Scene
 const scene = new THREE.Scene();
 
@@ -37,48 +73,54 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
+// Material
+const material = new THREE.MeshStandardMaterial({
+  color: 0x4a5560,
+  metalness: 0.8,
+  roughness: 0.3
+});
+
+// I-BEAM
+const topFlange = new THREE.Mesh(
+  new THREE.BoxGeometry(2, 0.2, 0.4),
+  material
+);
+topFlange.position.y = 1.4;
+
+const bottomFlange = new THREE.Mesh(
+  new THREE.BoxGeometry(2, 0.2, 0.4),
+  material
+);
+bottomFlange.position.y = -1.4;
+
+const web = new THREE.Mesh(
+  new THREE.BoxGeometry(0.2, 3, 0.3),
+  material
+);
+
+const beam = new THREE.Group();
+beam.add(topFlange, bottomFlange, web);
+scene.add(beam);
+
 // Light
 const light = new THREE.DirectionalLight(0xffffff, 1);
 light.position.set(5, 5, 5);
 scene.add(light);
 
-// Loader (REAL STEEL MODEL)
-const loader = new GLTFLoader();
-
-loader.load(
-  "https://threejs.org/examples/models/gltf/metal_plate/scene.gltf",
-  function (gltf) {
-    const beam = gltf.scene;
-
-    beam.scale.set(2, 2, 2);   // make it visible
-    beam.position.y = 0;
-
-    scene.add(beam);
-
-    animate(); // start animation only after model loads
-  },
-  undefined,
-  function (error) {
-    console.error("Model failed to load:", error);
-  }
-);
-
-// Animation loop
+// Animation
 function animate() {
   requestAnimationFrame(animate);
-
-  scene.rotation.y += 0.003;
-
+  beam.rotation.y += 0.01;
   renderer.render(scene, camera);
 }
+animate();
 
-// Responsive
+// Resize
 window.addEventListener('resize', () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
 });
-
 </script>
 
 </body>
