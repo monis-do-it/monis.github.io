@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Indoson Infratech</title>
+
   <style>
     body {
       margin: 0;
@@ -11,12 +12,14 @@
     }
   </style>
 </head>
+
 <body>
 
-<!-- Three.js CDN -->
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script type="module">
 
-<script>
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
+import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
+
 // Scene
 const scene = new THREE.Scene();
 
@@ -34,60 +37,40 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-// Geometry (Beam placeholder)
-// Steel material
-const material = new THREE.MeshStandardMaterial({
-  color: 0x4a5560,
-  metalness: 0.8,
-  roughness: 0.3
-});
-
-// ===== I-BEAM (realistic steel section) =====
-
-// Top flange
-const topFlange = new THREE.Mesh(
-  new THREE.BoxGeometry(2, 0.2, 0.4),
-  material
-);
-topFlange.position.y = 1.4;
-
-// Bottom flange
-const bottomFlange = new THREE.Mesh(
-  new THREE.BoxGeometry(2, 0.2, 0.4),
-  material
-);
-bottomFlange.position.y = -1.4;
-
-// Web (middle vertical plate)
-const web = new THREE.Mesh(
-  new THREE.BoxGeometry(0.2, 3, 0.3),
-  material
-);
-
-// Group all parts
-const beam = new THREE.Group();
-beam.add(topFlange);
-beam.add(bottomFlange);
-beam.add(web);
-
-scene.add(beam);
-
 // Light
 const light = new THREE.DirectionalLight(0xffffff, 1);
 light.position.set(5, 5, 5);
 scene.add(light);
 
+// Loader (REAL STEEL MODEL)
+const loader = new GLTFLoader();
+
+loader.load(
+  "https://threejs.org/examples/models/gltf/metal_plate/scene.gltf",
+  function (gltf) {
+    const beam = gltf.scene;
+
+    beam.scale.set(2, 2, 2);   // make it visible
+    beam.position.y = 0;
+
+    scene.add(beam);
+
+    animate(); // start animation only after model loads
+  },
+  undefined,
+  function (error) {
+    console.error("Model failed to load:", error);
+  }
+);
+
 // Animation loop
 function animate() {
   requestAnimationFrame(animate);
 
-  // slow rotation (just for testing)
-  beam.rotation.y += 0.01;
+  scene.rotation.y += 0.003;
 
   renderer.render(scene, camera);
 }
-
-animate();
 
 // Responsive
 window.addEventListener('resize', () => {
@@ -95,6 +78,7 @@ window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
 });
+
 </script>
 
 </body>
