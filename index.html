@@ -19,6 +19,20 @@ body{
   scroll-behavior:smooth;
 }
 
+/* SOUND BUTTON */
+#soundBtn{
+  position:fixed;
+  top:20px;
+  right:20px;
+  z-index:100;
+  background:rgba(255,255,255,0.1);
+  color:white;
+  border:none;
+  padding:10px 15px;
+  cursor:pointer;
+  backdrop-filter: blur(6px);
+}
+
 /* HERO */
 .hero{
   height:100vh;
@@ -126,7 +140,7 @@ body{
   color:#aaa;
 }
 
-/* ANIMATIONS */
+/* ANIMATION */
 @keyframes fadeUp{
   from{
     opacity:0;
@@ -141,6 +155,14 @@ body{
 </head>
 
 <body>
+
+<!-- SOUND BUTTON -->
+<button id="soundBtn">Sound ON</button>
+
+<!-- AUDIO -->
+<audio id="bgSound" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7c7f1e7d7b.mp3?filename=ambient-11075.mp3" type="audio/mpeg">
+</audio>
 
 <!-- HERO -->
 <section class="hero">
@@ -198,6 +220,35 @@ window.addEventListener('scroll', () => {
       section.classList.add('show');
     }
   });
+});
+
+// SOUND CONTROL
+const sound = document.getElementById("bgSound");
+const btn = document.getElementById("soundBtn");
+
+let started = false;
+
+// Start on first interaction
+document.body.addEventListener("click", () => {
+  if (!started) {
+    sound.volume = 0.25;
+    sound.play();
+    started = true;
+    btn.innerText = "Sound OFF";
+  }
+}, { once: true });
+
+// Toggle
+btn.addEventListener("click", (e) => {
+  e.stopPropagation();
+
+  if (sound.paused) {
+    sound.play();
+    btn.innerText = "Sound OFF";
+  } else {
+    sound.pause();
+    btn.innerText = "Sound ON";
+  }
 });
 </script>
 
