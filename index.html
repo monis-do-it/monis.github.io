@@ -22,6 +22,35 @@ body{
   font-family:'Inter', sans-serif;
 }
 
+/* NAVBAR */
+.nav{
+  position:fixed;
+  top:0;
+  width:100%;
+  padding:25px 8%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:100;
+  background:linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
+}
+
+.logo{
+  font-family:'Playfair Display', serif;
+  letter-spacing:2px;
+}
+
+.nav-links a{
+  margin-left:30px;
+  text-decoration:none;
+  color:#ccc;
+  transition:0.3s;
+}
+
+.nav-links a:hover{
+  color:white;
+}
+
 /* HERO */
 .hero{
   height:100vh;
@@ -114,6 +143,15 @@ body{
 
 <body>
 
+<!-- NAVBAR -->
+<nav class="nav">
+  <div class="logo">INDOSON</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+  </div>
+</nav>
+
 <!-- HERO -->
 <section class="hero">
   <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=80">
@@ -128,7 +166,7 @@ body{
 </section>
 
 <!-- ABOUT -->
-<section class="section about">
+<section class="section about" id="about">
   <h2>About</h2>
   <p>
     Indoson Infratech specializes in pre-engineered buildings,
@@ -139,7 +177,7 @@ body{
 </section>
 
 <!-- PROJECTS -->
-<section class="section projects">
+<section class="section projects" id="projects">
 
   <div class="project">
     <img src="https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&w=1200&q=80">
@@ -207,6 +245,15 @@ document.querySelectorAll(".project img").forEach(img=>{
       scrub:true
     },
     scale:1
+  });
+});
+
+// NAV SMOOTH SCROLL
+document.querySelectorAll('.nav-links a').forEach(link=>{
+  link.addEventListener('click', e=>{
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    lenis.scrollTo(target);
   });
 });
 </script>
