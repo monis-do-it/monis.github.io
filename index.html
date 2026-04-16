@@ -29,152 +29,111 @@ body{
   z-index:500;
   font-family:'Playfair Display';
   font-size:28px;
-  letter-spacing:4px;
 }
 
 /* CURSOR */
 .cursor{
-  width:20px;
-  height:20px;
-  border:1px solid white;
-  border-radius:50%;
-  position:fixed;
-  pointer-events:none;
-  transform:translate(-50%,-50%);
+  width:20px;height:20px;border:1px solid white;border-radius:50%;
+  position:fixed;pointer-events:none;transform:translate(-50%,-50%);
   z-index:300;
 }
 
 /* NAVBAR */
 .nav{
-  position:fixed;
-  top:0;
-  width:100%;
-  padding:25px 8%;
-  display:flex;
-  justify-content:space-between;
-  z-index:100;
+  position:fixed;top:0;width:100%;padding:25px 8%;
+  display:flex;justify-content:space-between;z-index:100;
   background:linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
 }
 
-.logo{
-  font-family:'Playfair Display';
-  letter-spacing:2px;
-}
+.logo{font-family:'Playfair Display';letter-spacing:2px;}
 
 .nav-links a{
   margin-left:30px;
   text-decoration:none;
   color:#ccc;
-  transition:0.3s;
 }
-
 .nav-links a:hover{color:white;}
 
 /* HERO */
-.hero{
-  height:100vh;
-  position:relative;
-  overflow:hidden;
-}
-
-.hero img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  transform:scale(1.25);
-}
-
+.hero{height:100vh;position:relative;overflow:hidden;}
+.hero img{width:100%;height:100%;object-fit:cover;transform:scale(1.25);}
 .hero::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,0.35);
+  content:"";position:absolute;inset:0;background:rgba(0,0,0,0.35);
 }
 
-.hero-content{
-  position:absolute;
-  bottom:12%;
-  left:8%;
-  max-width:700px;
-}
+.hero-content{position:absolute;bottom:12%;left:8%;}
+.hero h1{font-family:'Playfair Display';font-size:80px;}
 
-.hero h1{
-  font-family:'Playfair Display';
-  font-size:80px;
-  letter-spacing:3px;
-}
-
-.hero p{
-  margin-top:15px;
-  color:#bbb;
+.hero .cta{
+  margin-top:20px;
+  display:inline-block;
+  padding:10px 20px;
+  border:1px solid white;
+  color:white;
+  text-decoration:none;
 }
 
 /* SECTION */
-.section{
-  padding:180px 8%;
-}
+.section{padding:180px 8%;}
 
-/* ABOUT */
-.about h2{
-  font-family:'Playfair Display';
-  font-size:50px;
-  margin-bottom:20px;
+/* SERVICES */
+.services{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:40px;
+  margin-top:40px;
 }
-
-.about p{
-  max-width:700px;
-  line-height:1.9;
-  color:#aaa;
+.service{
+  border:1px solid #333;
+  padding:25px;
 }
 
 /* PROJECTS */
-.project{
-  margin-bottom:160px;
-  overflow:hidden;
-}
-
+.project{margin-bottom:160px;overflow:hidden;}
 .project img{
+  width:100%;height:550px;object-fit:cover;
+  transform:scale(1.2);transition:1s;
+}
+.project:hover img{transform:scale(1.05);}
+
+/* CONTACT */
+.contact input, .contact textarea{
   width:100%;
-  height:550px;
-  object-fit:cover;
-  transform:scale(1.2);
-  transition:1s;
+  padding:12px;
+  margin-bottom:15px;
+  background:#111;
+  border:1px solid #333;
+  color:white;
 }
 
-.project:hover img{
-  transform:scale(1.05);
+.contact button{
+  padding:12px 20px;
+  background:white;
+  color:black;
+  border:none;
 }
 
 /* WHATSAPP */
 .whatsapp{
-  position:fixed;
-  bottom:25px;
-  right:25px;
-  background:#25D366;
-  color:white;
-  padding:12px 18px;
-  border-radius:30px;
-  text-decoration:none;
-  font-size:14px;
-  z-index:200;
+  position:fixed;bottom:25px;right:25px;
+  background:#25D366;color:white;
+  padding:12px 18px;border-radius:30px;
+  text-decoration:none;z-index:200;
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOADER -->
 <div class="loader">INDOSON</div>
-
-<!-- CURSOR -->
 <div class="cursor"></div>
 
-<!-- NAVBAR -->
 <nav class="nav">
   <div class="logo">INDOSON</div>
   <div class="nav-links">
-    <a href="#about">About</a>
+    <a href="#services">Services</a>
     <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
   </div>
 </nav>
 
@@ -184,16 +143,27 @@ body{
   <div class="hero-content">
     <h1>Indoson Infratech</h1>
     <p>Engineering precision steel structures.</p>
+    <a class="cta" href="https://wa.me/91XXXXXXXXXX">Get Quote</a>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section class="section about" id="about">
-  <h2>About</h2>
-  <p>
-    Indoson Infratech specializes in pre-engineered buildings,
-    steel fabrication, and industrial construction solutions.
-  </p>
+<!-- SERVICES -->
+<section class="section" id="services">
+  <h2>Services</h2>
+  <div class="services">
+    <div class="service">
+      <h3>PEB Structures</h3>
+      <p>Pre-engineered industrial buildings.</p>
+    </div>
+    <div class="service">
+      <h3>Steel Fabrication</h3>
+      <p>Custom high precision steel work.</p>
+    </div>
+    <div class="service">
+      <h3>Industrial Construction</h3>
+      <p>Complete turnkey solutions.</p>
+    </div>
+  </div>
 </section>
 
 <!-- PROJECTS -->
@@ -207,16 +177,18 @@ body{
     <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80">
   </div>
 
-  <div class="project hover-target">
-    <img src="https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80">
-  </div>
-
 </section>
 
-<!-- WHATSAPP -->
-<a class="whatsapp" href="https://wa.me/91XXXXXXXXXX" target="_blank">
-  Chat on WhatsApp
-</a>
+<!-- CONTACT -->
+<section class="section contact" id="contact">
+  <h2>Contact</h2>
+  <input type="text" placeholder="Your Name">
+  <input type="tel" placeholder="Phone Number">
+  <textarea placeholder="Project Details"></textarea>
+  <button>Send Inquiry</button>
+</section>
+
+<a class="whatsapp" href="https://wa.me/91XXXXXXXXXX">WhatsApp</a>
 
 <!-- SCRIPTS -->
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -227,14 +199,9 @@ body{
 gsap.registerPlugin(ScrollTrigger);
 
 // LOADER
-gsap.to(".loader",{
-  opacity:0,
-  duration:1,
-  delay:1.2,
-  onComplete:()=>document.querySelector(".loader").style.display="none"
-});
+gsap.to(".loader",{opacity:0,delay:1,onComplete:()=>document.querySelector(".loader").style.display="none"});
 
-// SMOOTH SCROLL
+// LENIS
 const lenis=new Lenis({smooth:true,lerp:0.08});
 function raf(t){lenis.raf(t);requestAnimationFrame(raf);}
 requestAnimationFrame(raf);
@@ -242,13 +209,7 @@ requestAnimationFrame(raf);
 // HERO
 gsap.to(".hero img",{scale:1,duration:2});
 
-// ABOUT
-gsap.from(".about h2, .about p",{
-  scrollTrigger:{trigger:".about",start:"top 80%"},
-  y:80,opacity:0,duration:1.2,stagger:0.2
-});
-
-// PROJECT PARALLAX
+// PARALLAX
 document.querySelectorAll(".project img").forEach(img=>{
   gsap.to(img,{
     scrollTrigger:{trigger:img,start:"top bottom",end:"bottom top",scrub:true},
@@ -265,19 +226,10 @@ document.querySelectorAll('.nav-links a').forEach(link=>{
 });
 
 // CURSOR
-const cursor=document.querySelector('.cursor');
+const c=document.querySelector('.cursor');
 window.addEventListener('mousemove',e=>{
-  cursor.style.top=e.clientY+'px';
-  cursor.style.left=e.clientX+'px';
-});
-
-document.querySelectorAll('.hover-target').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{
-    cursor.style.transform="translate(-50%,-50%) scale(2)";
-  });
-  el.addEventListener('mouseleave',()=>{
-    cursor.style.transform="translate(-50%,-50%) scale(1)";
-  });
+  c.style.top=e.clientY+'px';
+  c.style.left=e.clientX+'px';
 });
 </script>
 
