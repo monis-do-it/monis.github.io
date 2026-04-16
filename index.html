@@ -20,6 +20,21 @@ body{
   background:#0b0b0b;
   color:white;
   font-family:'Inter', sans-serif;
+  cursor:none; /* hide default cursor */
+}
+
+/* CUSTOM CURSOR */
+.cursor{
+  width:20px;
+  height:20px;
+  border:1px solid white;
+  border-radius:50%;
+  position:fixed;
+  top:0;
+  left:0;
+  pointer-events:none;
+  transform:translate(-50%, -50%);
+  z-index:200;
 }
 
 /* NAVBAR */
@@ -44,7 +59,6 @@ body{
   margin-left:30px;
   text-decoration:none;
   color:#ccc;
-  transition:0.3s;
 }
 
 .nav-links a:hover{
@@ -83,15 +97,11 @@ body{
 .hero h1{
   font-family:'Playfair Display', serif;
   font-size:80px;
-  line-height:1.1;
-  letter-spacing:3px;
 }
 
 .hero p{
   margin-top:20px;
   color:#bbb;
-  font-size:18px;
-  line-height:1.6;
 }
 
 /* SECTION */
@@ -107,20 +117,14 @@ body{
 .about h2{
   font-family:'Playfair Display', serif;
   font-size:50px;
-  margin-bottom:20px;
 }
 
 .about p{
-  font-size:18px;
   line-height:1.9;
   color:#aaa;
 }
 
 /* PROJECTS */
-.projects{
-  padding-top:0;
-}
-
 .project{
   margin-bottom:160px;
   overflow:hidden;
@@ -143,6 +147,9 @@ body{
 
 <body>
 
+<!-- CUSTOM CURSOR -->
+<div class="cursor"></div>
+
 <!-- NAVBAR -->
 <nav class="nav">
   <div class="logo">INDOSON</div>
@@ -155,13 +162,9 @@ body{
 <!-- HERO -->
 <section class="hero">
   <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=80">
-
   <div class="hero-content">
     <h1>Indoson Infratech</h1>
-    <p>
-      Engineering precision steel structures and industrial spaces
-      designed for performance, scale, and durability.
-    </p>
+    <p>Engineering precision steel structures.</p>
   </div>
 </section>
 
@@ -171,23 +174,21 @@ body{
   <p>
     Indoson Infratech specializes in pre-engineered buildings,
     steel fabrication, and industrial construction solutions.
-    Every structure is built with precision, efficiency,
-    and long-term performance in mind.
   </p>
 </section>
 
 <!-- PROJECTS -->
 <section class="section projects" id="projects">
 
-  <div class="project">
+  <div class="project hover-target">
     <img src="https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&w=1200&q=80">
   </div>
 
-  <div class="project">
+  <div class="project hover-target">
     <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80">
   </div>
 
-  <div class="project">
+  <div class="project hover-target">
     <img src="https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80">
   </div>
 
@@ -204,10 +205,7 @@ body{
 gsap.registerPlugin(ScrollTrigger);
 
 // SMOOTH SCROLL
-const lenis = new Lenis({
-  smooth: true,
-  lerp: 0.08
-});
+const lenis = new Lenis({ smooth:true, lerp:0.08 });
 
 function raf(time){
   lenis.raf(time);
@@ -215,45 +213,45 @@ function raf(time){
 }
 requestAnimationFrame(raf);
 
-// HERO ZOOM
-gsap.to(".hero img", {
-  scale:1,
-  duration:2,
-  ease:"power3.out"
-});
+// HERO
+gsap.to(".hero img",{ scale:1, duration:2 });
 
-// ABOUT ANIMATION
-gsap.from(".about h2, .about p", {
-  scrollTrigger: {
-    trigger: ".about",
-    start: "top 80%"
-  },
-  y: 80,
-  opacity: 0,
-  duration: 1.2,
-  stagger: 0.2,
-  ease: "power3.out"
+// ABOUT
+gsap.from(".about h2, .about p",{
+  scrollTrigger:{ trigger:".about", start:"top 80%" },
+  y:80, opacity:0, duration:1.2, stagger:0.2
 });
 
 // PROJECT PARALLAX
 document.querySelectorAll(".project img").forEach(img=>{
   gsap.to(img,{
-    scrollTrigger:{
-      trigger:img,
-      start:"top bottom",
-      end:"bottom top",
-      scrub:true
-    },
+    scrollTrigger:{ trigger:img, start:"top bottom", end:"bottom top", scrub:true },
     scale:1
   });
 });
 
-// NAV SMOOTH SCROLL
+// NAV SCROLL
 document.querySelectorAll('.nav-links a').forEach(link=>{
   link.addEventListener('click', e=>{
     e.preventDefault();
-    const target = document.querySelector(link.getAttribute('href'));
-    lenis.scrollTo(target);
+    lenis.scrollTo(document.querySelector(link.getAttribute('href')));
+  });
+});
+
+// CUSTOM CURSOR
+const cursor = document.querySelector('.cursor');
+
+window.addEventListener('mousemove', e=>{
+  cursor.style.top = e.clientY + 'px';
+  cursor.style.left = e.clientX + 'px';
+});
+
+document.querySelectorAll('.hover-target').forEach(el=>{
+  el.addEventListener('mouseenter', ()=>{
+    cursor.style.transform = "translate(-50%, -50%) scale(2)";
+  });
+  el.addEventListener('mouseleave', ()=>{
+    cursor.style.transform = "translate(-50%, -50%) scale(1)";
   });
 });
 </script>
