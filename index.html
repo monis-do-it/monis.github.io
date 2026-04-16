@@ -41,7 +41,8 @@ body{
 /* NAVBAR */
 .nav{
   position:fixed;top:0;width:100%;padding:25px 8%;
-  display:flex;justify-content:space-between;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  z-index:100;
   background:linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
 }
 
@@ -52,7 +53,15 @@ body{
   text-decoration:none;
   color:#ccc;
 }
-.nav-links a:hover{color:white;}
+
+.nav-contact a{
+  margin-left:20px;
+  font-size:14px;
+  color:#aaa;
+  text-decoration:none;
+}
+
+.nav a:hover{color:white;}
 
 /* HERO */
 .hero{height:100vh;position:relative;overflow:hidden;}
@@ -97,7 +106,8 @@ body{
 .project:hover img{transform:scale(1.05);}
 
 /* CONTACT */
-.contact input, .contact textarea{
+.contact form input, 
+.contact form textarea{
   width:100%;
   padding:12px;
   margin-bottom:15px;
@@ -111,7 +121,25 @@ body{
   background:white;
   color:black;
   border:none;
+  cursor:pointer;
 }
+
+/* FOOTER */
+.footer{
+  padding:60px 8%;
+  border-top:1px solid #222;
+  display:flex;
+  justify-content:space-between;
+  color:#777;
+}
+
+.footer a{
+  margin-left:20px;
+  color:#777;
+  text-decoration:none;
+}
+
+.footer a:hover{color:white;}
 
 /* WHATSAPP */
 .whatsapp{
@@ -128,12 +156,20 @@ body{
 <div class="loader">INDOSON</div>
 <div class="cursor"></div>
 
+<!-- NAVBAR -->
 <nav class="nav">
   <div class="logo">INDOSON</div>
+
   <div class="nav-links">
     <a href="#services">Services</a>
     <a href="#projects">Projects</a>
     <a href="#contact">Contact</a>
+  </div>
+
+  <div class="nav-contact">
+    <a href="https://wa.me/91XXXXXXXXXX">WhatsApp</a>
+    <a href="mailto:your@email.com">Email</a>
+    <a href="https://instagram.com/yourpage">Instagram</a>
   </div>
 </nav>
 
@@ -179,15 +215,30 @@ body{
 
 </section>
 
-<!-- CONTACT -->
+<!-- QUOTATION FORM -->
 <section class="section contact" id="contact">
-  <h2>Contact</h2>
-  <input type="text" placeholder="Your Name">
-  <input type="tel" placeholder="Phone Number">
-  <textarea placeholder="Project Details"></textarea>
-  <button>Send Inquiry</button>
+  <h2>Request a Quote</h2>
+
+  <form action="https://formsubmit.co/your@email.com" method="POST">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="tel" name="phone" placeholder="Phone Number" required>
+    <input type="text" name="project" placeholder="Project Type">
+    <textarea name="details" placeholder="Project Details"></textarea>
+    <button type="submit">Send Inquiry</button>
+  </form>
 </section>
 
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© Indoson Infratech</p>
+  <div>
+    <a href="https://wa.me/91XXXXXXXXXX">WhatsApp</a>
+    <a href="mailto:your@email.com">Email</a>
+    <a href="https://instagram.com/yourpage">Instagram</a>
+  </div>
+</footer>
+
+<!-- WHATSAPP -->
 <a class="whatsapp" href="https://wa.me/91XXXXXXXXXX">WhatsApp</a>
 
 <!-- SCRIPTS -->
@@ -217,7 +268,7 @@ document.querySelectorAll(".project img").forEach(img=>{
   });
 });
 
-// NAV
+// NAV SCROLL
 document.querySelectorAll('.nav-links a').forEach(link=>{
   link.addEventListener('click',e=>{
     e.preventDefault();
