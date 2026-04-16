@@ -28,6 +28,7 @@ body{
   pointer-events:none;
   transform:translate(-50%,-50%);
   z-index:300;
+  transition:0.2s;
 }
 
 /* BACK */
@@ -139,7 +140,12 @@ body{
 <!-- CURSOR -->
 <div class="cursor"></div>
 
-<!-- SOUND -->
+<!-- BACKGROUND AMBIENT SOUND -->
+<audio id="bgSound" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8e3c1c5b2.mp3" type="audio/mp3">
+</audio>
+
+<!-- HOVER SOUND -->
 <audio id="hoverSound" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
 
 <a class="back" href="index.html">← Back</a>
@@ -226,15 +232,35 @@ window.addEventListener('mousemove', e=>{
   cursor.style.left = e.clientX + 'px';
 });
 
-// HOVER + SOUND
-const sound = document.getElementById("hoverSound");
+// SOUND SYSTEM (PREMIUM)
+const bgSound = document.getElementById("bgSound");
+const hoverSound = document.getElementById("hoverSound");
 
+let started = false;
+
+function startAudio(){
+  if(!started){
+    bgSound.volume = 0;
+    bgSound.play();
+    gsap.to(bgSound,{volume:0.15,duration:2}); // smooth fade in
+    started = true;
+  }
+}
+
+// Required user interaction (browser policy)
+window.addEventListener("click", startAudio);
+window.addEventListener("scroll", startAudio);
+
+// HOVER SOUND + CURSOR
 document.querySelectorAll('.hover-target').forEach(el=>{
   el.addEventListener('mouseenter',()=>{
     cursor.style.transform="translate(-50%,-50%) scale(2)";
-    sound.currentTime = 0;
-    sound.play();
+
+    hoverSound.currentTime = 0;
+    hoverSound.volume = 0.3;
+    hoverSound.play();
   });
+
   el.addEventListener('mouseleave',()=>{
     cursor.style.transform="translate(-50%,-50%) scale(1)";
   });
