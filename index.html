@@ -6,35 +6,42 @@
 
 <title>Indoson Infratech</title>
 
-<!-- FONTS -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
   background:#0b0b0b;
   color:white;
   font-family:'Inter', sans-serif;
-  cursor:none; /* hide default cursor */
+  cursor:none;
 }
 
-/* CUSTOM CURSOR */
+/* LOADER */
+.loader{
+  position:fixed;
+  inset:0;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:500;
+  font-family:'Playfair Display';
+  font-size:28px;
+  letter-spacing:4px;
+}
+
+/* CURSOR */
 .cursor{
   width:20px;
   height:20px;
   border:1px solid white;
   border-radius:50%;
   position:fixed;
-  top:0;
-  left:0;
   pointer-events:none;
-  transform:translate(-50%, -50%);
-  z-index:200;
+  transform:translate(-50%,-50%);
+  z-index:300;
 }
 
 /* NAVBAR */
@@ -45,13 +52,12 @@ body{
   padding:25px 8%;
   display:flex;
   justify-content:space-between;
-  align-items:center;
   z-index:100;
   background:linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
 }
 
 .logo{
-  font-family:'Playfair Display', serif;
+  font-family:'Playfair Display';
   letter-spacing:2px;
 }
 
@@ -59,11 +65,10 @@ body{
   margin-left:30px;
   text-decoration:none;
   color:#ccc;
+  transition:0.3s;
 }
 
-.nav-links a:hover{
-  color:white;
-}
+.nav-links a:hover{color:white;}
 
 /* HERO */
 .hero{
@@ -90,17 +95,17 @@ body{
   position:absolute;
   bottom:12%;
   left:8%;
-  z-index:2;
   max-width:700px;
 }
 
 .hero h1{
-  font-family:'Playfair Display', serif;
+  font-family:'Playfair Display';
   font-size:80px;
+  letter-spacing:3px;
 }
 
 .hero p{
-  margin-top:20px;
+  margin-top:15px;
   color:#bbb;
 }
 
@@ -110,16 +115,14 @@ body{
 }
 
 /* ABOUT */
-.about{
-  max-width:700px;
-}
-
 .about h2{
-  font-family:'Playfair Display', serif;
+  font-family:'Playfair Display';
   font-size:50px;
+  margin-bottom:20px;
 }
 
 .about p{
+  max-width:700px;
   line-height:1.9;
   color:#aaa;
 }
@@ -128,7 +131,6 @@ body{
 .project{
   margin-bottom:160px;
   overflow:hidden;
-  cursor:pointer;
 }
 
 .project img{
@@ -136,18 +138,35 @@ body{
   height:550px;
   object-fit:cover;
   transform:scale(1.2);
-  transition: transform 1s ease;
+  transition:1s;
 }
 
 .project:hover img{
   transform:scale(1.05);
+}
+
+/* WHATSAPP */
+.whatsapp{
+  position:fixed;
+  bottom:25px;
+  right:25px;
+  background:#25D366;
+  color:white;
+  padding:12px 18px;
+  border-radius:30px;
+  text-decoration:none;
+  font-size:14px;
+  z-index:200;
 }
 </style>
 </head>
 
 <body>
 
-<!-- CUSTOM CURSOR -->
+<!-- LOADER -->
+<div class="loader">INDOSON</div>
+
+<!-- CURSOR -->
 <div class="cursor"></div>
 
 <!-- NAVBAR -->
@@ -194,64 +213,70 @@ body{
 
 </section>
 
-<!-- GSAP -->
+<!-- WHATSAPP -->
+<a class="whatsapp" href="https://wa.me/91XXXXXXXXXX" target="_blank">
+  Chat on WhatsApp
+</a>
+
+<!-- SCRIPTS -->
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-
-<!-- LENIS -->
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
 
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-// SMOOTH SCROLL
-const lenis = new Lenis({ smooth:true, lerp:0.08 });
+// LOADER
+gsap.to(".loader",{
+  opacity:0,
+  duration:1,
+  delay:1.2,
+  onComplete:()=>document.querySelector(".loader").style.display="none"
+});
 
-function raf(time){
-  lenis.raf(time);
-  requestAnimationFrame(raf);
-}
+// SMOOTH SCROLL
+const lenis=new Lenis({smooth:true,lerp:0.08});
+function raf(t){lenis.raf(t);requestAnimationFrame(raf);}
 requestAnimationFrame(raf);
 
 // HERO
-gsap.to(".hero img",{ scale:1, duration:2 });
+gsap.to(".hero img",{scale:1,duration:2});
 
 // ABOUT
 gsap.from(".about h2, .about p",{
-  scrollTrigger:{ trigger:".about", start:"top 80%" },
-  y:80, opacity:0, duration:1.2, stagger:0.2
+  scrollTrigger:{trigger:".about",start:"top 80%"},
+  y:80,opacity:0,duration:1.2,stagger:0.2
 });
 
 // PROJECT PARALLAX
 document.querySelectorAll(".project img").forEach(img=>{
   gsap.to(img,{
-    scrollTrigger:{ trigger:img, start:"top bottom", end:"bottom top", scrub:true },
+    scrollTrigger:{trigger:img,start:"top bottom",end:"bottom top",scrub:true},
     scale:1
   });
 });
 
-// NAV SCROLL
+// NAV
 document.querySelectorAll('.nav-links a').forEach(link=>{
-  link.addEventListener('click', e=>{
+  link.addEventListener('click',e=>{
     e.preventDefault();
     lenis.scrollTo(document.querySelector(link.getAttribute('href')));
   });
 });
 
-// CUSTOM CURSOR
-const cursor = document.querySelector('.cursor');
-
-window.addEventListener('mousemove', e=>{
-  cursor.style.top = e.clientY + 'px';
-  cursor.style.left = e.clientX + 'px';
+// CURSOR
+const cursor=document.querySelector('.cursor');
+window.addEventListener('mousemove',e=>{
+  cursor.style.top=e.clientY+'px';
+  cursor.style.left=e.clientX+'px';
 });
 
 document.querySelectorAll('.hover-target').forEach(el=>{
-  el.addEventListener('mouseenter', ()=>{
-    cursor.style.transform = "translate(-50%, -50%) scale(2)";
+  el.addEventListener('mouseenter',()=>{
+    cursor.style.transform="translate(-50%,-50%) scale(2)";
   });
-  el.addEventListener('mouseleave', ()=>{
-    cursor.style.transform = "translate(-50%, -50%) scale(1)";
+  el.addEventListener('mouseleave',()=>{
+    cursor.style.transform="translate(-50%,-50%) scale(1)";
   });
 });
 </script>
