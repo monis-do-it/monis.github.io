@@ -154,6 +154,11 @@ body{
 
 <body>
 
+<!-- SOUND -->
+<audio id="bgSound" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8e3c1c5b2.mp3" type="audio/mp3">
+</audio>
+
 <div class="loader">INDOSON</div>
 <div class="cursor"></div>
 
@@ -219,30 +224,28 @@ body{
 
 </section>
 
-<!-- QUOTATION FORM -->
+<!-- CONTACT -->
 <section class="section contact" id="contact">
   <h2>Request a Quote</h2>
 
   <form action="https://formsubmit.co/your@email.com" method="POST">
     <input type="text" name="name" placeholder="Your Name" required>
     <input type="tel" name="phone" placeholder="Phone Number" required>
-    <input type="text" name="project" placeholder="Project Type">
     <textarea name="details" placeholder="Project Details"></textarea>
     <button type="submit">Send Inquiry</button>
   </form>
 </section>
 
-<!-- FOOTER -->
 <footer class="footer">
   <p>© Indoson Infratech</p>
   <div>
-    <a href="https://wa.me/91XXXXXXXXXX">WhatsApp</a>
-    <a href="mailto:your@email.com">Email</a>
-    <a href="https://instagram.com/yourpage">Instagram</a>
+    <a href="#">WhatsApp</a>
+    <a href="#">Email</a>
+    <a href="#">Instagram</a>
   </div>
 </footer>
 
-<a class="whatsapp" href="https://wa.me/91XXXXXXXXXX">WhatsApp</a>
+<a class="whatsapp" href="#">WhatsApp</a>
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
@@ -250,6 +253,21 @@ body{
 
 <script>
 gsap.registerPlugin(ScrollTrigger);
+
+// SOUND
+const sound = document.getElementById("bgSound");
+let started = false;
+
+function startSound(){
+  if(!started){
+    sound.volume = 0;
+    sound.play();
+    gsap.to(sound,{volume:0.2,duration:2}); // smooth fade in
+    started = true;
+  }
+}
+window.addEventListener("click", startSound);
+window.addEventListener("scroll", startSound);
 
 // LOADER
 gsap.to(".loader",{opacity:0,delay:1,onComplete:()=>document.querySelector(".loader").style.display="none"});
@@ -283,16 +301,6 @@ const c=document.querySelector('.cursor');
 window.addEventListener('mousemove',e=>{
   c.style.top=e.clientY+'px';
   c.style.left=e.clientX+'px';
-});
-
-// CURSOR HOVER EFFECT
-document.querySelectorAll('.hover-target').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{
-    c.style.transform="translate(-50%,-50%) scale(2)";
-  });
-  el.addEventListener('mouseleave',()=>{
-    c.style.transform="translate(-50%,-50%) scale(1)";
-  });
 });
 </script>
 
